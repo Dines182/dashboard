@@ -9,13 +9,13 @@ def about_us():
     with st.container():
         col1, col2 = st.columns([1, 4])
         with col1:
-            st.image("https://via.placeholder.com/120", width=100)  # AI face or placeholder
+            st.image("image.jpg", width=100)  # AI face or placeholder
         with col2:
             st.markdown("""
-            **Name:** Dr. Alex Johnson  
-            **Email:** alex.johnson@university.edu  
-            **Role:** Project Supervisor  
-            **Affiliation:** Department of Data Science, XYZ University  
+            **Name:** Md Rafiqul Islam  
+            **Email:** mdrafiqul.islam@cdu.edu.au
+            
+            **Affiliation:** Department of Information Technology, CDU University  
             """)
     st.markdown("---")
 
@@ -24,27 +24,27 @@ def about_us():
     team = [
         {
             "name": "Sonish Khanal",
-            "email": "sonish.khanal@email.com",
+            "email": "sonish.khanal@students.cdu.edu.au",
             "role": "Dashboard Developer",
-            "img": "https://via.placeholder.com/120"
+            "img": "image.jpg"
         },
         {
             "name": "Dinesh Karki",
-            "email": "Dinesh@email.com",
+            "email": "dinesh.karki@students.cdu.edu.au",
             "role": "Data Analyst",
-            "img": "https://via.placeholder.com/120"
+            "img": "image.jpg"
         },
         {
             "name": "Ibhramin Khan",
-            "email": "Ibhramin@email.com",
+            "email": "ibrahim.salman@students.cdu.edu.au",
             "role": "Model Trainer",
-            "img": "https://via.placeholder.com/120"
+            "img": "image.jpg"
         },
         {
             "name": "Sailesh Kc",
-            "email": "Sailesh@email.com",
+            "email": "sailesh.kc@students.cdu.edu.au",
             "role": "Research & Report",
-            "img": "https://via.placeholder.com/120"
+            "img": "image.jpg"
         },
     ]
 

@@ -10,45 +10,43 @@ def statis():
         st.error("Dataset must include a 'Diabetes_012' column to use this dashboard.")
         return
 
-    # Sidebar: Diabetes status selector
-    st.sidebar.markdown("### Data by Diabetes Status")
+    st.markdown("## 📊 Summary Statistics by Diabetes Status")
+    # Diabetes status mapping
     diabetes_labels = {
         0: "No Diabetes",
         1: "Pre-diabetic",
         2: "Diabetic"
     }
 
-    selected_status = st.sidebar.selectbox(
+    # Main area selector instead of sidebar
+    selected_status = st.selectbox(
         "Select Diabetes Status",
         sorted(df["Diabetes_012"].unique()),
-        format_func=lambda x: diabetes_labels.get(x, str(x))
+        format_func=lambda x: diabetes_labels.get(x, str(x)),
+        index=0
     )
 
-    # Filter data for the selected diabetes status
+    # Filter data
     filtered_df = df[df["Diabetes_012"] == selected_status]
 
-    st.markdown("## 📊 Summary Statistics by Diabetes Status")
-    st.markdown(f"### Status: {diabetes_labels[selected_status]}")
-
-    # Columns to summarize
+    # Define columns
     binary_cols = [
-        "HighBP", "HighChol", "CholCheck", "Smoker", "Stroke",
+        "HighBP", "HighChol", "Smoker", "Stroke",
         "HeartDiseaseorAttack", "PhysActivity", "Fruits", "Veggies",
-        "HvyAlcoholConsump", "AnyHealthcare", "NoDocbcCost", "DiffWalk"
+        "HvyAlcoholConsump", "DiffWalk"
     ]
     numeric_cols = [
-        "BMI", "GenHlth", "MentHlth", "PhysHlth", "Age", "Education", "Income"
+        "BMI", "GenHlth", "Age", "Education", "Income"
     ]
 
-    # Calculate means for all columns
+    # Calculate stats
     binary_means = filtered_df[binary_cols].mean().multiply(100).round(2)
     numeric_means = filtered_df[numeric_cols].mean().round(2)
 
-    # Combine and rename for clarity
+    # Rename and merge
     summary = pd.concat([binary_means, numeric_means]).rename({
         "HighBP": "% with High Blood Pressure",
         "HighChol": "% with High Cholesterol",
-        "CholCheck": "% Had Cholesterol Check",
         "Smoker": "% Smokers",
         "Stroke": "% with Stroke History",
         "HeartDiseaseorAttack": "% with Heart Disease or Attack",
@@ -56,20 +54,21 @@ def statis():
         "Fruits": "% Eat Fruits Daily",
         "Veggies": "% Eat Veggies Daily",
         "HvyAlcoholConsump": "% Heavy Alcohol Consumers",
-        "AnyHealthcare": "% with Any Healthcare",
-        "NoDocbcCost": "% Skipped Doctor Due to Cost",
         "DiffWalk": "% Have Walking Difficulty",
         "BMI": "Average BMI",
         "GenHlth": "Average General Health (1=Excellent to 5=Poor)",
-        "MentHlth": "Avg Mental Health Days (Last 30 Days)",
-        "PhysHlth": "Avg Physical Health Days (Last 30 Days)",
         "Age": "Average Age",
         "Education": "Average Education Level (1–6)",
         "Income": "Average Income Level (1–8)"
     })
 
-    # Format for display
+    # Display table within a container with a fixed height
     summary_df = pd.DataFrame(summary).reset_index()
     summary_df.columns = ["Metric", "Value"]
+    # Adjust index to start from 1
+    summary_df.index = summary_df.index + 1  # Shift the index by 1
 
-    st.dataframe(summary_df, use_container_width=True)
+    # Use a container for the table
+    with st.container():
+        # Set the table to be scrollable by defining a fixed height
+        st.dataframe(summary_df, use_container_width=True, height=353)  # Adjust the height as needed

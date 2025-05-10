@@ -8,18 +8,32 @@ def visual():
     df = pd.read_csv('cleaned_diabetes_data.csv')
 
     # Preprocessing
-    df['Sex_Label'] = df['Sex'].map({1: 'Male', 0: 'Female'})
+    # Step 1: Ensure the 'Sex' column is numeric and fix any values greater than 0.5
+    df['Sex'] = df['Sex'].apply(lambda x: 1 if x > 0.5 else 0)  # Binarizing
+
+    # Step 2: Map to readable labels
+    df['Sex_Label'] = df['Sex'].map({0: 'Female', 1: 'Male'})  # Mapping to 'Female' and 'Male'
+
+    # Check the unique values to ensure the mapping is applied correctly
+    print(df['Sex_Label'].unique())  # Output should be 'Female' and 'Male'
     df['Diabetes_Status'] = df['Diabetes_012'].map({0: 'No Diabetes', 1: 'Pre-Diabetes', 2: 'Diabetes'})
     df['Income_Label'] = df['Income'].map({
         1: '< $10k', 2: '$10-15k', 3: '$15-20k', 4: '$20-25k',
         5: '$25-35k', 6: '$35-50k', 7: '$50-75k', 8: '> $75k'
     })
 
-    # Sidebar filters
-    st.sidebar.header("🔍 Filters")
-    sex_filter = st.sidebar.selectbox("Sex", options=["All"] + df['Sex_Label'].unique().tolist())
-    income_filter = st.sidebar.selectbox("Income Group", options=["All"] + df['Income_Label'].dropna().unique().tolist())
-    age_range = st.sidebar.slider("Age Range", int(df['Age'].min()), int(df['Age'].max()), (5, 20))
+    st.title("📊 Visualisation of Diabetes Analysis")
+
+    # --- Filters on Main Page ---
+    st.markdown("### 🔍 Filters")
+    filter_col1, filter_col2, filter_col3 = st.columns(3)
+
+    with filter_col1:
+        sex_filter = st.selectbox("Sex", options=["All"] + df['Sex_Label'].unique().tolist())
+    with filter_col2:
+        income_filter = st.selectbox("Income Group", options=["All"] + df['Income_Label'].dropna().unique().tolist())
+    with filter_col3:
+        age_range = st.slider("Age Range", int(df['Age'].min()), int(df['Age'].max()), (5, 20))
 
     # Apply filters
     filtered_df = df.copy()
@@ -30,8 +44,6 @@ def visual():
     filtered_df = filtered_df[(filtered_df['Age'] >= age_range[0]) & (filtered_df['Age'] <= age_range[1])]
 
     # --- Visualizations ---
-    st.title("📊 Diabetes Dashboard")
-
     col1, col2, col3 = st.columns(3)
     with col1:
         st.subheader("BMI vs Age")
@@ -68,6 +80,10 @@ def visual():
     with col6:
         st.subheader("Correlation Heatmap")
         st.plotly_chart(
-            px.imshow(filtered_df.select_dtypes(include=['int64', 'float64']).corr(), text_auto=True, title="Correlation Heatmap"),
+            px.imshow(
+                filtered_df.select_dtypes(include=['int64', 'float64']).corr(),
+                text_auto=True,
+                title="Correlation Heatmap"
+            ),
             use_container_width=True
         )
