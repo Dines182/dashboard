@@ -15,7 +15,6 @@ def visual():
     df['Sex_Label'] = df['Sex'].map({0: 'Female', 1: 'Male'})  # Mapping to 'Female' and 'Male'
 
     # Check the unique values to ensure the mapping is applied correctly
-    print(df['Sex_Label'].unique())  # Output should be 'Female' and 'Male'
     df['Diabetes_Status'] = df['Diabetes_012'].map({0: 'No Diabetes', 1: 'Pre-Diabetes', 2: 'Diabetes'})
     df['Income_Label'] = df['Income'].map({
         1: '< $10k', 2: '$10-15k', 3: '$15-20k', 4: '$20-25k',
@@ -48,19 +47,19 @@ def visual():
     with col1:
         st.subheader("BMI vs Age")
         st.plotly_chart(
-            px.scatter(filtered_df, x="BMI", y="Age", color="Diabetes_Status", title="BMI vs Age"),
+            px.scatter(filtered_df, x="BMI", y="Age", color="Diabetes_Status"),
             use_container_width=True
         )
     with col2:
         st.subheader("HighBP vs BMI")
         st.plotly_chart(
-            px.scatter(filtered_df, x="HighBP", y="BMI", color="Diabetes_Status", title="HighBP vs BMI"),
+            px.scatter(filtered_df, x="HighBP", y="BMI", color="Diabetes_Status"),
             use_container_width=True
         )
     with col3:
         st.subheader("Diabetes Status Pie")
         st.plotly_chart(
-            px.pie(filtered_df, names="Diabetes_Status", title="Diabetes Status Distribution"),
+            px.pie(filtered_df, names="Diabetes_Status"),
             use_container_width=True
         )
 
@@ -68,13 +67,13 @@ def visual():
     with col4:
         st.subheader("BMI Histogram")
         st.plotly_chart(
-            px.histogram(filtered_df, x="BMI", color="Diabetes_Status", nbins=30, title="BMI Histogram"),
+            px.histogram(filtered_df, x="BMI", color="Diabetes_Status", nbins=30),
             use_container_width=True
         )
     with col5:
         st.subheader("Income vs Diabetes Status")
         st.plotly_chart(
-            px.box(filtered_df, x="Diabetes_Status", y="Income", color="Diabetes_Status", title="Income vs Diabetes Status"),
+            px.box(filtered_df, x="Diabetes_Status", y="Income", color="Diabetes_Status"),
             use_container_width=True
         )
     with col6:
@@ -83,7 +82,20 @@ def visual():
             px.imshow(
                 filtered_df.select_dtypes(include=['int64', 'float64']).corr(),
                 text_auto=True,
-                title="Correlation Heatmap"
             ),
             use_container_width=True
         )
+    
+        # --- New Row: Full Width Gender vs Diabetes Status ---
+    st.subheader("Male vs Female Distribution")
+    gender_diabetes_df = df.groupby(['Sex_Label', 'Diabetes_Status']).size().reset_index(name='Count')
+
+    fig_gender = px.bar(
+        gender_diabetes_df,
+        x='Sex_Label',
+        y='Count',
+        color='Diabetes_Status',
+        barmode='group',
+    )
+
+    st.plotly_chart(fig_gender, use_container_width=True)
