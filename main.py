@@ -14,15 +14,19 @@ st.markdown("""
 
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
-    h1 {
-        font-family: 'Poppins', sans-serif;
-        margin-top: 0.5rem;
+    .custom-title {
         margin-bottom: 0rem;
-        text-align: center;
+    }
+
+    .custom-title h1 {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
         font-size: 2.8rem;
         background: linear-gradient(to right, #1abc9c, #16a085);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        text-align: center;
         text-shadow:
             2px 2px 6px rgba(255, 255, 255, 0.2),
             -1px -1px 2px rgba(0, 0, 0, 0.3);
@@ -30,7 +34,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<h1>Data-Driven Diabetes Exploration</h1>', unsafe_allow_html=True)
+st.markdown("""
+    <div class="custom-title">
+        <h1>🩺 Data-Driven Diabetes Exploration</h1>
+    </div>
+""", unsafe_allow_html=True)
+
 
 # Define pages
 pages = {
