@@ -6,6 +6,32 @@ from About_Us import about_us
 # Set page config
 st.set_page_config(page_title="Data-Driven Diabetes Exploration", layout="wide")
 
+st.markdown("""
+    <style>
+    .main > div:first-child {
+        padding-top: 0rem;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+    h1 {
+        font-family: 'Poppins', sans-serif;
+        margin-top: 1.3rem;
+        margin-bottom: 0rem;
+        text-align: center;
+        font-size: 2.8rem;
+        background: linear-gradient(to right, #1abc9c, #16a085);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow:
+            2px 2px 6px rgba(255, 255, 255, 0.2),
+            -1px -1px 2px rgba(0, 0, 0, 0.3);
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown('<h1>Data-Driven Diabetes Exploration</h1>', unsafe_allow_html=True)
+
 # Define pages
 pages = {
     "📊 Statistics": statis,
