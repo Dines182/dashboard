@@ -71,4 +71,4 @@ def statis():
     # Use a container for the table
     with st.container():
         # Set the table to be scrollable by defining a fixed height
-        st.dataframe(summary_df, use_container_width=True, height=353)  # Adjust the height as needed
+        st.dataframe(summary_df, use_container_width=True, height=333)  # Adjust the height as needed
