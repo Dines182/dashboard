@@ -16,7 +16,7 @@ st.markdown("""
 
     h1 {
         font-family: 'Poppins', sans-serif;
-        margin-top: 1.3rem;
+        margin-top: 0.5rem;
         margin-bottom: 0rem;
         text-align: center;
         font-size: 2.8rem;
