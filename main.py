@@ -36,7 +36,7 @@ st.markdown("""
 
 st.markdown("""
     <div class="custom-title">
-        <h1>🩺 Data-Driven Diabetes Exploration</h1>
+        <h1>Data-Driven Diabetes Exploration</h1>
     </div>
 """, unsafe_allow_html=True)
 
