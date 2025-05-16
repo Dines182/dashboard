@@ -4,7 +4,7 @@ from statis import statis
 from About_Us import about_us
 
 # Set page config
-st.set_page_config(page_title="Diabetes Dashboard", layout="wide")
+st.set_page_config(page_title="Data-Driven Diabetes Exploration", layout="wide")
 
 # Define pages
 pages = {
