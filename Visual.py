@@ -32,7 +32,7 @@ def visual():
     with filter_col2:
         income_filter = st.selectbox("Income Group", options=["All"] + df['Income_Label'].dropna().unique().tolist())
     with filter_col3:
-        age_range = st.slider("Age Range", int(df['Age'].min()), int(df['Age'].max()), (5, 20))
+        age_range = st.slider("Age Range", int(df['Age'].min()), int(df['Age'].max()),(int(df['Age'].min()), int(df['Age'].max())))
 
     # Apply filters
     filtered_df = df.copy()
