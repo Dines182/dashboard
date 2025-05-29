@@ -4,21 +4,6 @@ def about_us():
     st.title("👥 About Us")
     st.markdown("---")
 
-    # Supervisor section
-    st.subheader("👨‍🏫 Supervisor")
-    with st.container():
-        col1, col2 = st.columns([1, 4])
-        with col1:
-            st.image("image.jpg", width=100)  # AI face or placeholder
-        with col2:
-            st.markdown("""
-            **Name:** Md Rafiqul Islam  
-            **Email:** mdrafiqul.islam@cdu.edu.au
-            
-            **Affiliation:** Department of Information Technology, CDU University  
-            """)
-    st.markdown("---")
-
     # Team Members
     st.subheader("👨‍💻 Team Members")
     team = [
